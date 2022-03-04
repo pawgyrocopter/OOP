@@ -3,6 +3,7 @@ using System;
 using Lab1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220304080558_123qwe123")]
+    partial class _123qwe123
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.2");
@@ -87,9 +89,6 @@ namespace Lab1.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("IdentificationNumber")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 
@@ -103,9 +102,6 @@ namespace Lab1.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("SecondName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SeriesAndPassportNumber")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
