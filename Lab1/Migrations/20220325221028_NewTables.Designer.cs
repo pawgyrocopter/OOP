@@ -11,13 +11,24 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220301070141_rolesAdded")]
-    partial class rolesAdded
+    [Migration("20220325221028_NewTables")]
+    partial class NewTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.2");
+
+            modelBuilder.Entity("Lab1.Entities.Bank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Banks");
+                });
 
             modelBuilder.Entity("Lab1.Entities.Role", b =>
                 {
@@ -72,13 +83,17 @@ namespace Lab1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("IdentificationNumber")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
@@ -87,8 +102,17 @@ namespace Lab1.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("RoleId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("SecondName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SeriesAndPassportNumber")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -96,13 +120,21 @@ namespace Lab1.Migrations
 
                     b.ToTable("Users");
 
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+
                     b.HasData(
                         new
                         {
                             Id = 123,
-                            Age = 0,
                             RoleId = 1
                         });
+                });
+
+            modelBuilder.Entity("Lab1.Entities.UserCategories.Client", b =>
+                {
+                    b.HasBaseType("Lab1.Entities.User");
+
+                    b.HasDiscriminator().HasValue("Client");
                 });
 
             modelBuilder.Entity("Lab1.Entities.User", b =>

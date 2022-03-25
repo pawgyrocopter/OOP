@@ -81,6 +81,10 @@ namespace Lab1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
@@ -114,12 +118,21 @@ namespace Lab1.Migrations
 
                     b.ToTable("Users");
 
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+
                     b.HasData(
                         new
                         {
                             Id = 123,
                             RoleId = 1
                         });
+                });
+
+            modelBuilder.Entity("Lab1.Entities.UserCategories.Client", b =>
+                {
+                    b.HasBaseType("Lab1.Entities.User");
+
+                    b.HasDiscriminator().HasValue("Client");
                 });
 
             modelBuilder.Entity("Lab1.Entities.User", b =>

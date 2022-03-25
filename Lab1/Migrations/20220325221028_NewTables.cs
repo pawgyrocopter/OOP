@@ -4,10 +4,22 @@
 
 namespace Lab1.Migrations
 {
-    public partial class rolesAdded : Migration
+    public partial class NewTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Banks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Banks", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
@@ -28,11 +40,15 @@ namespace Lab1.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     FirstName = table.Column<string>(type: "TEXT", nullable: true),
+                    SecondName = table.Column<string>(type: "TEXT", nullable: true),
                     LastName = table.Column<string>(type: "TEXT", nullable: true),
+                    SeriesAndPassportNumber = table.Column<string>(type: "TEXT", nullable: true),
+                    IdentificationNumber = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
                     Password = table.Column<string>(type: "TEXT", nullable: true),
                     RoleId = table.Column<int>(type: "INTEGER", nullable: true),
-                    Age = table.Column<int>(type: "INTEGER", nullable: false)
+                    Discriminator = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,8 +92,8 @@ namespace Lab1.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Age", "Email", "FirstName", "LastName", "Password", "RoleId" },
-                values: new object[] { 123, 0, null, null, null, null, 1 });
+                columns: new[] { "Id", "Discriminator", "Email", "FirstName", "IdentificationNumber", "LastName", "Password", "PhoneNumber", "RoleId", "SecondName", "SeriesAndPassportNumber" },
+                values: new object[] { 123, "User", null, null, null, null, null, null, 1, null, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
@@ -87,6 +103,9 @@ namespace Lab1.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Banks");
+
             migrationBuilder.DropTable(
                 name: "Users");
 

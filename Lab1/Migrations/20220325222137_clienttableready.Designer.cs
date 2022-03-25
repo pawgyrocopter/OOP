@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220304081029_123qwe123qwe")]
-    partial class _123qwe123qwe
+    [Migration("20220325222137_clienttableready")]
+    partial class clienttableready
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,6 +83,10 @@ namespace Lab1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
@@ -116,11 +120,31 @@ namespace Lab1.Migrations
 
                     b.ToTable("Users");
 
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+
                     b.HasData(
                         new
                         {
                             Id = 123,
                             RoleId = 1
+                        });
+                });
+
+            modelBuilder.Entity("Lab1.Entities.UserCategories.Client", b =>
+                {
+                    b.HasBaseType("Lab1.Entities.User");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasDiscriminator().HasValue("Client");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 124,
+                            RoleId = 1,
+                            UserId = 123
                         });
                 });
 

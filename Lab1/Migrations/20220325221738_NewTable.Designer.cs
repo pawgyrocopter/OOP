@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220304080558_123qwe123")]
-    partial class _123qwe123
+    [Migration("20220325221738_NewTable")]
+    partial class NewTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,10 +83,17 @@ namespace Lab1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("IdentificationNumber")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
@@ -104,16 +111,35 @@ namespace Lab1.Migrations
                     b.Property<string>("SecondName")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("SeriesAndPassportNumber")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
 
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+
                     b.HasData(
                         new
                         {
                             Id = 123,
+                            RoleId = 1
+                        });
+                });
+
+            modelBuilder.Entity("Lab1.Entities.UserCategories.Client", b =>
+                {
+                    b.HasBaseType("Lab1.Entities.User");
+
+                    b.HasDiscriminator().HasValue("Client");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 124,
                             RoleId = 1
                         });
                 });
