@@ -1,0 +1,72 @@
+﻿@model OperatorModel
+
+<!DOCTYPE html>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">From</th>
+        <th scope="col">Client Id</th>
+        <th scope="col">Client Email</th>
+        <th scope="col">Client Bill Id</th>
+        <th scope="col">To</th>
+        <th scope="col">Client Id</th>
+        <th scope="col">Client Email</th>
+        <th scope="col">Client Bill Id</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in @Model.TransferModels)
+    {
+        <tr>
+            <th scope="row"></th>
+            <td>@item.FromWhoId</td>
+            <td>@item.FromWho</td>
+            <td>@item.FromBillId</td>
+            <th scope="row"></th>
+            <td>@item.ToWhoId</td>
+            <td>@item.ToWho</td>
+            <td>@item.ToBillId</td>
+            <td>
+                <form asp-controller="Operator" asp-action="UndoTransfer" asp-route-transferId="@item.TransferId" method="post">
+                    <button>Undo</button>
+                </form>
+            </td>
+        </tr>
+    }
+
+
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Email</th>
+        <th scope="col">Passport</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Factory name</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in @Model.RequestMoniesModels)
+    {
+        <tr>
+            
+            <td>@item.RequestMoney.Client.Email</td>
+            <td>@item.RequestMoney.Client.SeriesAndPassportNumber</td>
+            <td>@item.RequestMoney.Client.PhoneNumber</td>
+            <td>@item.Factory.Name</td>
+            <td>
+                <form asp-controller="Operator" asp-action="Ok" asp-route-id="@item.RequestMoney.Id" method="post">
+                    <button>Ok</button>
+                </form>
+            </td>
+        </tr>
+    }
+
+
+    </tbody>
+</table>
