@@ -1,0 +1,33 @@
+﻿@model CreditModel
+
+<!DOCTYPE html>
+
+<div class="row">
+
+
+    <form asp-action="CreateCredit" asp-route-billId="@Model.BillId" asp-route-plan="@Model.Plan" asp-controller="Client" asp-anti-forgery="true" method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Options</label>
+            </div>
+
+            <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.SelectedCreditInfo">
+                <option disabled>Choose...</option>
+                @for (int i = 0; i < Model.Durations.Count; i++)
+                {
+                    <option value="@(i+1)"> @Model.Durations[i] months | @Model.Procents[i] % </option>
+                }
+            </select>
+
+            <input type="number" asp-for="@Model.Money"/>
+            <div class="form-group ">
+                <span class="col border m-3"> @Model.BillId</span>
+                <span class="col border m-3"> @Model.BillName</span>
+                <span class="col border m-3"> @Model.ClientEmail</span>
+                <input type="submit" value="Send for approval" class="btn"/>
+            </div>
+        </div>
+
+    </form>
+
+</div>

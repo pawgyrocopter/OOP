@@ -25,6 +25,14 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult Profile()
     {
+       var roleId =  _context.Users.FirstOrDefault(x => x.Email.Equals(User.Identity.Name)).RoleId;
+        switch (roleId)
+        {
+            case 3:
+                return RedirectToAction("ClientProfile", "Client");
+            case 6:
+                return RedirectToAction("OperatorProfile", "Operator");
+        }
         return View(new RoleModel() {Roles = _context.Roles.ToList()});
     }
 
@@ -79,7 +87,6 @@ public class AccountController : Controller
                     PhoneNumber = model.PhoneNumber,
                     IdentificationNumber = model.IdentificationNumber,
                     SeriesAndPassportNumber = model.SeriesAndPassportNumber
-                    
                 };
                 Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
                 if (userRole != null)

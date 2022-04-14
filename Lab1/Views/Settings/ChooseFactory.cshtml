@@ -2,14 +2,14 @@
 
 <!DOCTYPE html>
 
-<form asp-action="ChooseBank" asp-controller="Settings" asp-anti-forgery="true" method="post">
+<form asp-action="ChooseFactory" asp-controller="Settings" asp-anti-forgery="true" method="post">
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Options</label>
         </div>
-        <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.SelectedBankId">
+        <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.SelectedFactoryId">
             <option disabled>Choose...</option>
-            @foreach (var i in Model.Banks)
+            @foreach (var i in Model.Factories)
             {
                 <option value="@i.Id">@i.Name</option>
             }

@@ -1,20 +1,36 @@
-﻿@model RoleModel
+﻿@model SettingsModel
 
 <h2>Profile page</h2>
 
-<form asp-action="Profile" asp-controller="Account" asp-anti-forgery="true" method="post">
+<form asp-action="Settings" asp-controller="Settings" asp-anti-forgery="true" method="post">
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Options</label>
         </div>
         <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.SelectedRoleId">
-            <option selected>Choose...</option>
+            <option disabled>Choose...</option>
             @foreach (var i in Model.Roles)
             {
                 <option value="@i.Id">@i.Name</option>
             }
             
         </select>
+        <select class="custom-select" id="inputGroupSelect02" asp-for="@Model.SelectedBankId">
+            <option disabled>Choose...</option>
+            @foreach (var i in Model.Banks)
+            {
+                <option value="@i.Id">@i.Name</option>
+            }
+                    
+        </select>
+        <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.SelectedFactoryId">
+                            <option disabled>Choose...</option>
+                            @foreach (var i in Model.Factories)
+                            {
+                                <option value="@i.Id">@i.Name</option>
+                            }
+                            
+                        </select>
         <div class="form-group">
             <input type="submit" value="Become Manager" class="btn"/>
         </div>

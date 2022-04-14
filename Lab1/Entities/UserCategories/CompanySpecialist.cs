@@ -1,6 +1,6 @@
 ﻿namespace Lab1.Entities.UserCategories;
 
-public class CompanySpecialist : User
+public class CompanySpecialist : Client
 {
-    
+   
 }

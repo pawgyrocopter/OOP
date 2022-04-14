@@ -2,5 +2,5 @@
 
 public class Operator : User
 {
-    
+    public bool OneOperation { get; set; }
 }

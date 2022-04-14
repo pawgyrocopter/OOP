@@ -1,19 +1,113 @@
-﻿@page
-@model Lab1.Views.Client.ClientProfile
-
-@{
-    Layout = null;
-}
+﻿@model ClientPageModel
 
 <!DOCTYPE html>
 
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
+<div class="bill-creation">
+    <form asp-action="CreateBill" asp-controller="Client" asp-anti-forgery="true" method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Create one bill</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.SelectedBankId">
+                @foreach (var i in Model.Banks)
+                {
+                    <option value="@i.Id">@i.Name</option>
+                }
+            </select>
+            <input type="text" asp-for="@Model.BillName"/>
+            <div class="form-group">
+                <input type="submit" value="Create bill" class="btn"/>
+            </div>
+        </div>
+
+    </form>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Bill Name</th>
+            <th scope="col">Bill Id</th>
+            <th scope="col">Bank Name</th>
+            <th scope="col">Money</th>
+            <th scope="col">State</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in @Model.Bills)
+        {
+            <tr>
+                <th scope="row">1</th>
+                <td>@item.Name</td>
+                <td>@item.Id</td>
+                <td>@item.Bank.Name</td>
+                <td>@item.Money</td>
+                <td>@item.State</td>
+                <td>
+                    <form asp-action="WithdrawMoney" asp-controller="Client" asp-route-billId="@item.Id" asp-route-bankId="@item.BankId" asp-anti-forgery="true" method="post">
+                        <div class="form-group">
+                            <input type="number" asp-for="@Model.WMoney"/>
+                            <input type="submit" value="Withdraw" class="btn"/>
+                        </div>
+                    </form>
+                    <form asp-action="PaymentRequest" asp-controller="Client" asp-route-billId="@item.Id" asp-route-bankId="@item.BankId" asp-anti-forgery="true" method="post">
+                        <div class="form-group">
+                            <input type="submit" value="GET MONEY" class="btn"/>
+                        </div>
+                    </form>
+                    <form asp-action="FreezeBill" asp-controller="Client" asp-route-billId="@item.Id" asp-anti-forgery="true" method="post">
+                        <div class="form-group">
+                            <input type="submit" value="Freeze" class="btn"/>
+                        </div>
+                    </form>
+                    <form asp-action="BlockBill" asp-controller="Client" asp-route-billId="@item.Id" asp-anti-forgery="true" method="post">
+                        <div class="form-group">
+                            <input type="submit" value="Block" class="btn"/>
+                        </div>
+                    </form>
+                    <form asp-action="MakeActiveBill" asp-controller="Client" asp-route-billId="@item.Id" asp-anti-forgery="true" method="post">
+                        <div class="form-group">
+                            <input type="submit" value="Make active " class="btn"/>
+                        </div>
+                    </form>
+                </td>
+                <td>
+                    <form asp-action="CreditPage" asp-controller="Client" asp-route-billId="@item.Id" asp-route-plan="@false" asp-anti-forgery="true" method="post">
+                        <div class="form-group">
+                            <input type="submit" value="Credit" class="btn"/>
+                        </div>
+                    </form>
+                </td>
+                <td>
+                    <form asp-action="CreditPage" asp-controller="Client" asp-route-billId="@item.Id" asp-route-plan="@true" asp-anti-forgery="true" method="post">
+                        <div class="form-group">
+                            <input type="submit" value="Plan" class="btn"/>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        }
+
+
+        </tbody>
+    </table>
+    <form asp-action="SendMoney" asp-controller="Client" asp-anti-forgery="true" method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Options</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.SelectedBillId">
+                @foreach (var i in Model.Bills)
+                {
+                    <option value="@i.Id">@i.Name</option>
+                }
+            </select>
+            <input title="Money" type="number" asp-for="@Model.TransferMoney"/>
+            <input title="Bill Id" type="number" asp-for="@Model.TransferBillId"/>
+            <div class="form-group">
+                <input type="submit" value="Send money" class="btn"/>
+            </div>
+        </div>
+
+    </form>
+
 </div>
-</body>
-</html>
