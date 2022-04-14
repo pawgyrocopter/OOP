@@ -1,6 +1,6 @@
 ﻿namespace Lab1.Logging;
 
-public class CustomLogging
+public static class CustomLogging
 {
     
 }

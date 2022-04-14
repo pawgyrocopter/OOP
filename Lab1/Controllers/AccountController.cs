@@ -10,13 +10,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lab1.Models;
 using Microsoft.VisualBasic;
+using Serilog;
+using Serilog.Core;
+using static Serilog.RollingInterval;
 
 namespace Lab1.Controllers;
 
 public class AccountController : Controller
 {
     private ApplicationDbContext _context;
-
+    
     public AccountController(ApplicationDbContext context)
     {
         _context = context;
@@ -25,13 +28,22 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult Profile()
     {
-       var roleId =  _context.Users.FirstOrDefault(x => x.Email.Equals(User.Identity.Name)).RoleId;
+        Log.Information("Profile page clicked");
+        var roleId =  _context.Users.FirstOrDefault(x => x.Email.Equals(User.Identity.Name)).RoleId;
         switch (roleId)
         {
             case 3:
+                Log.Information($"ClientProfile {User.Identity.Name} page redirected");
                 return RedirectToAction("ClientProfile", "Client");
             case 6:
+                Log.Information($"OperatorProfile {User.Identity.Name} page redirected");
                 return RedirectToAction("OperatorProfile", "Operator");
+            case 5:
+                Log.Information($"ManagerProfile {User.Identity.Name} page redirected");
+                return RedirectToAction("ManagerProfile", "Manager");
+            case 1:
+                Log.Information($"AdminProfile {User.Identity.Name} page redirected");
+                return RedirectToAction("AdminProfile", "Admin");
         }
         return View(new RoleModel() {Roles = _context.Roles.ToList()});
     }
@@ -39,6 +51,7 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult Register()
     {
+        Log.Information($"Register page redirected");
         return View();
     }
 
@@ -59,6 +72,7 @@ public class AccountController : Controller
 
     public async Task<IActionResult> Logout()
     {
+        Log.Information($"{User.Identity.Name} logged out");
         await HttpContext.SignOutAsync();
         return RedirectToAction("Index", "Home");
     }
@@ -95,7 +109,7 @@ public class AccountController : Controller
                 await _context.SaveChangesAsync();
 
                 await Authenticate(user);
-
+                Log.Information($"{User.Identity.Name} signed up");
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -123,7 +137,7 @@ public class AccountController : Controller
             if (user != null)
             {
                 await Authenticate(user);
-
+                Log.Information($"{User.Identity.Name} logged in");
                 return RedirectToAction("Index", "Home");
             }
 

@@ -3,6 +3,7 @@ using System;
 using Lab1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220414025857_sadlkjqwe")]
+    partial class sadlkjqwe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.2");
@@ -575,13 +577,6 @@ namespace Lab1.Migrations
                             IsBank = true,
                             Name = "BelWeb"
                         });
-                });
-
-            modelBuilder.Entity("Lab1.Entities.UserCategories.Admin", b =>
-                {
-                    b.HasBaseType("Lab1.Entities.User");
-
-                    b.HasDiscriminator().HasValue("Admin");
                 });
 
             modelBuilder.Entity("Lab1.Entities.UserCategories.Client", b =>

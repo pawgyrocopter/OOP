@@ -1,7 +1,6 @@
 ﻿@model ClientPageModel
 
 <!DOCTYPE html>
-
 <div class="bill-creation">
     <form asp-action="CreateBill" asp-controller="Client" asp-anti-forgery="true" method="post">
         <div class="input-group mb-3">
@@ -109,5 +108,34 @@
         </div>
 
     </form>
+    <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Bill Id</th>
+                <th scope="col">Bank Name</th>
+                <th scope="col">Money</th>
+                <th scope="col">%</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in @Model.CreditDisplayModels)
+            {
+                <tr>
+                    <th scope="row">1</th>
+                    <td>@item.BillId</td>
+                    <td>@item.BankName</td>
+                    <td>@item.Money</td>
+                    <td>@item.Procent</td>
+                    <td>@item.StartTime</td>
+                    <td>@item.EndTime</td>
+                </tr>
+            }
+    
+    
+            </tbody>
+        </table>
 
 </div>

@@ -1,4 +1,4 @@
-﻿@model OperatorModel
+﻿@model ManagerModel
 
 <!DOCTYPE html>
 
@@ -17,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in @Model.TransferModels)
+    @foreach (var item in @Model.OperatorModel.TransferModels)
     {
         <tr>
             <th scope="row"></th>
@@ -51,7 +51,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in @Model.RequestMoniesModels)
+    @foreach (var item in @Model.OperatorModel.RequestMoniesModels)
     {
         <tr>
             
@@ -68,5 +68,71 @@
     }
 
 
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Bill Id</th>
+        <th scope="col">Bank Name</th>
+        <th scope="col">Money</th>
+        <th scope="col">%</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">End Time</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in @Model.CreditDisplayModels)
+    {
+        <tr>
+            <th scope="row">1</th>
+            <td>@item.BillId</td>
+            <td>@item.BankName</td>
+            <td>@item.Money</td>
+            <td>@item.Procent</td>
+            <td>@item.StartTime</td>
+            <td>@item.EndTime</td>
+            <td>
+                <form asp-action="Approve" asp-controller="Manager" asp-route-creditId="@item.Id" method="post">
+                    <button class="btn" >Approve</button>
+                </form>
+            </td>
+        </tr>
+    }
+    
+    
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Email</th>
+        <th scope="col">Identification Number</th>
+        <th scope="col">Series And Passport Number</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in @Model.UserModels)
+    {
+        <tr>
+            <th scope="row">1</th>
+            <td>@item.Email</td>
+            <td>@item.IdentificationNumber</td>
+            <td>@item.SeriesAndPassportNumber</td>
+            <td>@item.PhoneNumber</td>
+            <td>
+                <form asp-action="ApproveClient" asp-controller="Manager" asp-route-email="@item.Email" method="post">
+                    <button class="btn" >Approve client registration</button>
+                </form>
+            </td>
+        </tr>
+    }
+    
+    
     </tbody>
 </table>

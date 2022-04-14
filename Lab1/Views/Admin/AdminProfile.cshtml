@@ -1,4 +1,4 @@
-﻿@model ManagerModel
+﻿@model AdminPageModel
 
 <!DOCTYPE html>
 
@@ -17,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in @Model.OperatorModel.TransferModels)
+    @foreach (var item in @Model.ManagerModel.OperatorModel.TransferModels)
     {
         <tr>
             <th scope="row"></th>
@@ -51,7 +51,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in @Model.OperatorModel.RequestMoniesModels)
+    @foreach (var item in @Model.ManagerModel.OperatorModel.RequestMoniesModels)
     {
         <tr>
             
@@ -84,7 +84,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in @Model.CreditDisplayModels)
+    @foreach (var item in @Model.ManagerModel.CreditDisplayModels)
     {
         <tr>
             <th scope="row">1</th>
@@ -117,7 +117,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in @Model.UserModels)
+    @foreach (var item in @Model.ManagerModel.UserModels)
     {
         <tr>
             <th scope="row">1</th>
@@ -136,3 +136,35 @@
     
     </tbody>
 </table>
+<h1>NOT RECOMMENDED BELOW(ЕСЛИ ТЫ ЭТО СДЕЛЕШЬ ТО КРАХ ВСЕМУ И ВСЯ</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Client Id</th>
+        <th scope="col">Bank name</th>
+        <th scope="col">Bill name</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in @Model.BillCreations)
+    {
+        <tr>
+            <th scope="row">1</th>
+            <td>@item.ClientId</td>
+            <td>@item.BankName</td>
+            <td>@item.Name</td>
+            <td>
+                <form asp-action="DeleteBill" asp-controller="Admin" method="post">
+                    <button class="btn" >DELETE BILL</button>
+                </form>
+            </td>
+        </tr>
+    }
+    
+    
+    </tbody>
+</table>
+
+<textarea disabled style="width: 1000px; height: 600px">@Model.LogInfo</textarea>

@@ -16,6 +16,6 @@ public class ClientPageModel
     public int TransferMoney { get; set; }
     public int TransferBillId { get; set; }
     
-    
+    public List<CreditDisplayModel> CreditDisplayModels { get; set; }
     public int WMoney { get; set; }
 }

@@ -32,6 +32,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<Transfer> Transfers { get; set; }
     
     public DbSet<Operator> Operators { get; set; }
+    public DbSet<Manager> Managers { get; set; }
+    
+    public DbSet<Admin> Admins { get; set; }
+
     // public DbSet<Topic> Topics { get; set; }
     //
     // public DbSet<TopicItem> TopicItems { get; set; }

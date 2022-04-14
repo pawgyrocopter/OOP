@@ -4,7 +4,9 @@ using Lab1.Entities;
 using Lab1.Entities.Other;
 using Lab1.Entities.UserCategories;
 using Lab1.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace Lab1.Controllers;
 
@@ -18,6 +20,7 @@ public class OperatorController : Controller
         _context = context;
     }
 
+    [Authorize(Roles = "operator")]
     public IActionResult OperatorProfile()
     {
         List<Transfer> transfers = _context.Transfers.ToList();
@@ -63,6 +66,7 @@ public class OperatorController : Controller
         return View(model);
     }
     
+    [Authorize(Roles = "operator,manager,admin")]
     [HttpPost]
     public async Task<IActionResult>  UndoTransfer(int transferId)
     {
@@ -72,7 +76,7 @@ public class OperatorController : Controller
         fromBill.Money += transfer.Money;
         if (toBill.Money < transfer.Money)
         {
-            return RedirectToAction("OperatorProfile");
+            return RedirectToAction("Profile", "Account");
         }
         toBill.Money -= transfer.Money;
         _context.Bills.Update(fromBill);
@@ -80,10 +84,12 @@ public class OperatorController : Controller
         transfer.Display = false;
         _context.Transfers.Update(transfer);
         _context.SaveChanges();
-        return RedirectToAction("OperatorProfile");
+        Log.Information($"{User.Identity.Name} undood transfer with id {transferId}");
+        return RedirectToAction("Profile", "Account");
     }
 
 
+    [Authorize(Roles = "operator,manager,admin")]
     [HttpPost]
     public async Task<IActionResult> Ok(int id)
     {
@@ -94,6 +100,7 @@ public class OperatorController : Controller
         _context.Bills.Update(bill);
         _context.RequestMonies.Update(request);
         _context.SaveChangesAsync();
-        return RedirectToAction("OperatorProfile");
+        Log.Information($"{User.Identity.Name} approved money request with id {id}");
+        return RedirectToAction("Profile", "Account");
     }
 }
