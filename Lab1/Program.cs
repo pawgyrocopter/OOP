@@ -6,7 +6,7 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger =
-    new LoggerConfiguration().WriteTo.Console().WriteTo.File(@"C:\Users\kR9_h\RiderProjects\OOP\Lab1\wwwroot\Logs\",
+    new LoggerConfiguration().WriteTo.Console().WriteTo.File(@"wwwroot\Logs\",
         rollingInterval: RollingInterval.Day).CreateLogger();
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

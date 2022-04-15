@@ -102,13 +102,17 @@ public class AdminController : Controller
         };
         var billCreations = _context.BillCreations.ToList();
 
-        string str;
-        using (var fs = new FileStream(@"C:\Users\kR9_h\RiderProjects\OOP\Lab1\wwwroot\Logs\20220414", FileMode.Open,
-                   FileAccess.Read, FileShare.ReadWrite))
-        using (var sr = new StreamReader(fs, Encoding.Default))
+        string str ="";
+        foreach (var path in Directory.EnumerateFiles(@"wwwroot/Logs"))
         {
-            str = sr.ReadToEnd();
+            using (var fs = new FileStream(path, FileMode.Open,
+                       FileAccess.Read, FileShare.ReadWrite))
+            using (var sr = new StreamReader(fs, Encoding.Default))
+            {
+                str += sr.ReadToEnd();
+            }
         }
+        
 
 
         AdminPageModel adminPageModel = new()
